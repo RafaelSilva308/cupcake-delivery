@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Pedido #{{ pedido.id }} — Cupcake Delivery{% endblock %}
+
+{% block content %}
+  <h1>Pedido confirmado! 🎉</h1>
+
+  <p>Obrigado, <strong>{{ pedido.nome_cliente }}</strong>! Seu pedido <strong>#{{ pedido.id }}</strong> foi recebido.</p>
+
+  <section class="order-summary">
+    <h2>Itens</h2>
+    <ul>
+      {% for item in pedido.itens %}
+        <li>{{ item.quantidade }}x {{ item.cupcake.nome }} — R$ {{ "%.2f"|format(item.subtotal) }}</li>
+      {% endfor %}
+    </ul>
+    <p class="cart-total">Total: R$ {{ "%.2f"|format(pedido.total) }}</p>
+  </section>
+
+  <section class="order-details">
+    <h2>Entrega</h2>
+    <p><strong>Endereço:</strong> {{ pedido.endereco }}</p>
+    <p><strong>Telefone:</strong> {{ pedido.telefone }}</p>
+    <p><strong>Pagamento:</strong> {{ pedido.forma_pagamento }}</p>
+    <p><strong>Status:</strong> {{ pedido.status }}</p>
+  </section>
+
+  <a href="{{ url_for('catalog.index') }}">Voltar ao cardápio</a>
+{% endblock %}

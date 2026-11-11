@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Finalizar pedido — Cupcake Delivery{% endblock %}
+
+{% block content %}
+  <h1>Finalizar Pedido</h1>
+
+  <section class="order-summary">
+    <h2>Resumo</h2>
+    <ul>
+      {% for item in items %}
+        <li>{{ item.quantidade }}x {{ item.cupcake.nome }} — R$ {{ "%.2f"|format(item.subtotal) }}</li>
+      {% endfor %}
+    </ul>
+    <p class="cart-total">Total: R$ {{ "%.2f"|format(total) }}</p>
+  </section>
+
+  <form method="post" class="checkout-form">
+    <label>
+      Nome
+      <input type="text" name="nome_cliente" required value="{{ request.form.get('nome_cliente', '') }}">
+    </label>
+    <label>
+      Telefone
+      <input type="text" name="telefone" required value="{{ request.form.get('telefone', '') }}">
+    </label>
+    <label>
+      Endereço de entrega
+      <textarea name="endereco" required>{{ request.form.get('endereco', '') }}</textarea>
+    </label>
+    <label>
+      Forma de pagamento
+      <select name="forma_pagamento" required>
+        <option value="">Selecione</option>
+        {% for forma in formas_pagamento %}
+          <option value="{{ forma }}" {% if request.form.get('forma_pagamento') == forma %}selected{% endif %}>
+            {{ forma }}
+          </option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <button type="submit" class="btn-primary">Confirmar pedido</button>
+  </form>
+{% endblock %}
