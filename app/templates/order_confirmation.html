@@ -2,39 +2,33 @@
 
 {% block title %}Pedido #{{ pedido.id }} — Cupcake Delivery{% endblock %}
 
-{% block header_left %}
-  <span class="spacer"></span>
-{% endblock %}
-{% block header_title %}Pedido Confirmado{% endblock %}
-{% block header_right %}
-  <span class="spacer"></span>
-{% endblock %}
-
 {% block content %}
-  <div class="confirmation-icon">🎉</div>
-  <h2 class="confirmation-title">Pedido #{{ pedido.id }} recebido!</h2>
-  <p class="confirmation-subtitle">Obrigado, {{ pedido.nome_cliente }}. Seu pedido já está em preparo.</p>
+  <div class="narrow">
+    <div class="confirmation-icon">🎉</div>
+    <h2 class="confirmation-title">Pedido #{{ pedido.id }} recebido!</h2>
+    <p class="confirmation-subtitle">Obrigado, {{ pedido.nome_cliente }}. Seu pedido já está em preparo.</p>
 
-  <div class="info-card">
-    <h2>🧾 Itens</h2>
-    <ul class="order-summary-list">
-      {% for item in pedido.itens %}
-        <li>{{ item.quantidade }}x {{ item.cupcake.nome }} — R$ {{ "%.2f"|format(item.subtotal) }}</li>
-      {% endfor %}
-    </ul>
-    <div class="summary-row total">
-      <span>Total</span>
-      <span>R$ {{ "%.2f"|format(pedido.total) }}</span>
+    <div class="info-card">
+      <h2>🧾 Itens</h2>
+      <ul class="order-summary-list">
+        {% for item in pedido.itens %}
+          <li>{{ item.quantidade }}x {{ item.cupcake.nome }} — R$ {{ "%.2f"|format(item.subtotal) }}</li>
+        {% endfor %}
+      </ul>
+      <div class="summary-row total">
+        <span>Total</span>
+        <span>R$ {{ "%.2f"|format(pedido.total) }}</span>
+      </div>
     </div>
-  </div>
 
-  <div class="info-card">
-    <h2>📍 Entrega</h2>
-    <div class="detail-row"><span>Endereço</span><span>{{ pedido.endereco }}</span></div>
-    <div class="detail-row"><span>Telefone</span><span>{{ pedido.telefone }}</span></div>
-    <div class="detail-row"><span>Pagamento</span><span>{{ pedido.forma_pagamento|capitalize }}</span></div>
-    <div class="detail-row"><span>Status</span><span>{{ pedido.status|capitalize }}</span></div>
-  </div>
+    <div class="info-card">
+      <h2>📍 Entrega</h2>
+      <div class="detail-row"><span>Endereço</span><span>{{ pedido.endereco }}</span></div>
+      <div class="detail-row"><span>Telefone</span><span>{{ pedido.telefone }}</span></div>
+      <div class="detail-row"><span>Pagamento</span><span>{{ pedido.forma_pagamento|capitalize }}</span></div>
+      <div class="detail-row"><span>Status</span><span>{{ pedido.status|capitalize }}</span></div>
+    </div>
 
-  <a class="btn-primary" href="{{ url_for('catalog.index') }}">Voltar ao Cardápio</a>
+    <a class="btn-primary" href="{{ url_for('catalog.index') }}">Voltar ao Cardápio</a>
+  </div>
 {% endblock %}

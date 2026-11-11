@@ -7,17 +7,14 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-  <div class="app-card">
-    <div class="app-header">
-      {% block header_left %}
-        <span class="spacer"></span>
-      {% endblock %}
-      <h1>{% block header_title %}🧁 Cardápio{% endblock %}</h1>
-      {% block header_right %}
-        <a class="icon-btn" href="{{ url_for('cart.ver_carrinho') }}" aria-label="Carrinho">🛒</a>
-      {% endblock %}
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="{{ url_for('catalog.index') }}">🧁 Cupcake Delivery</a>
+      <a class="icon-btn" href="{{ url_for('cart.ver_carrinho') }}" aria-label="Carrinho">🛒</a>
     </div>
+  </header>
 
+  <main class="container">
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <ul class="flashes">
@@ -29,7 +26,7 @@
     {% endwith %}
 
     {% block content %}{% endblock %}
-  </div>
+  </main>
 
   <footer class="footer">
     <p>Projeto Integrador Transdisciplinar em Engenharia de Software II — App de Delivery de Cupcakes</p>

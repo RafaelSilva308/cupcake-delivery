@@ -29,31 +29,28 @@ body {
   font-family: "Segoe UI", Verdana, sans-serif;
   background: var(--page-bg);
   color: var(--brown);
-  display: flex;
-  justify-content: center;
-  padding: 2rem 1rem;
 }
 
-.app-card {
-  width: 100%;
-  max-width: 420px;
+/* Topbar */
+.topbar {
   background: var(--card-bg);
-  border-radius: 28px;
-  box-shadow: 0 20px 40px rgba(74, 55, 47, 0.12);
-  padding: 1.5rem 1.5rem 2rem;
-  min-height: 70vh;
+  box-shadow: 0 2px 10px rgba(74, 55, 47, 0.06);
 }
 
-.app-header {
+.topbar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.25rem;
 }
 
-.app-header h1 {
-  font-size: 1.15rem;
-  margin: 0;
+.brand {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--brown);
+  text-decoration: none;
 }
 
 .icon-btn {
@@ -71,21 +68,49 @@ body {
   flex-shrink: 0;
 }
 
-.app-header .spacer {
-  width: 2.5rem;
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--brown-light);
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.back-link:hover {
+  color: var(--pink-dark);
+}
+
+/* Layout principal */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.narrow {
+  max-width: 560px;
+  margin: 0 auto;
 }
 
 .footer {
   text-align: center;
-  padding: 1rem;
+  padding: 1.5rem;
   color: #8a7a74;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin: 0 0 1.25rem;
 }
 
 .flashes {
   list-style: none;
   padding: 0;
   margin: 0 0 1rem;
+  max-width: 560px;
 }
 
 .flash {
@@ -93,7 +118,6 @@ body {
   border-radius: 999px;
   margin-bottom: 0.5rem;
   font-size: 0.85rem;
-  text-align: center;
 }
 
 .flash-success { background: #e1f3e6; color: #3c7a52; }
@@ -104,14 +128,14 @@ body {
 /* Catálogo */
 .product-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
 }
 
 .product-card {
   background: var(--card-bg);
   border-radius: 18px;
-  padding: 0.75rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   box-shadow: 0 6px 16px rgba(74, 55, 47, 0.08);
@@ -119,17 +143,17 @@ body {
 
 .product-thumb {
   width: 100%;
-  height: 90px;
+  height: 130px;
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.75rem;
 }
 
 .product-thumb img {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   object-fit: contain;
 }
 
@@ -141,15 +165,15 @@ body {
 .bg-blue { background: var(--thumb-blue); }
 
 .product-card h2 {
-  font-size: 0.95rem;
-  margin: 0 0 0.2rem;
+  font-size: 1rem;
+  margin: 0 0 0.25rem;
 }
 
 .product-description {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: var(--brown-light);
   flex-grow: 1;
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.75rem;
 }
 
 .product-row {
@@ -169,13 +193,13 @@ body {
 }
 
 .btn-add-circle {
-  width: 2.1rem;
-  height: 2.1rem;
+  width: 2.2rem;
+  height: 2.2rem;
   border-radius: 50%;
   border: none;
   background: var(--blue);
   color: var(--brown);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: bold;
   cursor: pointer;
   line-height: 1;
@@ -188,7 +212,7 @@ body {
 }
 
 /* Botões genéricos */
-.btn-primary, .link-btn {
+.btn-primary {
   display: inline-block;
   width: 100%;
   text-align: center;
@@ -230,21 +254,22 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: var(--pink-pale);
+  background: var(--card-bg);
   border-radius: 16px;
-  padding: 0.6rem 0.8rem;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 12px rgba(74, 55, 47, 0.06);
 }
 
 .cart-item .product-thumb {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   margin: 0;
   flex-shrink: 0;
 }
 
 .cart-item .product-thumb img {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
 }
 
 .cart-item-info {
@@ -253,7 +278,7 @@ body {
 
 .cart-item-info .name {
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .cart-item-info .price {
@@ -264,23 +289,23 @@ body {
 .cart-item-controls {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
 }
 
 .cart-item-controls input[type="number"] {
-  width: 2.8rem;
+  width: 3rem;
   text-align: center;
   border-radius: 999px;
   border: 1px solid #e8cdd4;
-  padding: 0.3rem;
+  padding: 0.35rem;
 }
 
 .cart-item-controls button {
   border: none;
-  background: var(--card-bg);
+  background: var(--pink-pale);
   border-radius: 999px;
-  padding: 0.35rem 0.6rem;
-  font-size: 0.75rem;
+  padding: 0.4rem 0.65rem;
+  font-size: 0.8rem;
   cursor: pointer;
 }
 
@@ -289,10 +314,11 @@ body {
 }
 
 .summary-box {
-  background: var(--pink-pale);
+  background: var(--card-bg);
   border-radius: 16px;
-  padding: 1rem;
+  padding: 1rem 1.25rem;
   margin-top: 0.5rem;
+  box-shadow: 0 4px 12px rgba(74, 55, 47, 0.06);
 }
 
 .summary-row {
@@ -306,7 +332,7 @@ body {
 .summary-row.total {
   color: var(--brown);
   font-weight: bold;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   border-top: 1px dashed #e8cdd4;
   padding-top: 0.5rem;
   margin-top: 0.5rem;
@@ -314,29 +340,30 @@ body {
 
 /* Checkout */
 .info-card {
-  background: var(--pink-pale);
+  background: var(--card-bg);
   border-radius: 16px;
-  padding: 1rem;
+  padding: 1.25rem;
   margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(74, 55, 47, 0.06);
 }
 
 .info-card h2 {
-  font-size: 0.95rem;
-  margin: 0 0 0.6rem;
+  font-size: 1rem;
+  margin: 0 0 0.75rem;
 }
 
 .info-card label {
   display: block;
   font-size: 0.85rem;
   font-weight: bold;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.75rem;
 }
 
 .info-card input,
 .info-card textarea {
   width: 100%;
   margin-top: 0.3rem;
-  padding: 0.55rem 0.7rem;
+  padding: 0.6rem 0.75rem;
   border-radius: 10px;
   border: 1px solid #e8cdd4;
   font-size: 0.9rem;
@@ -355,9 +382,9 @@ body {
   gap: 0.5rem;
   font-weight: normal;
   font-size: 0.9rem;
-  background: var(--card-bg);
+  background: var(--pink-pale);
   border-radius: 10px;
-  padding: 0.6rem 0.8rem;
+  padding: 0.65rem 0.8rem;
 }
 
 .payment-option input {
@@ -379,7 +406,7 @@ body {
 /* Confirmação */
 .confirmation-icon {
   text-align: center;
-  font-size: 3rem;
+  font-size: 3.5rem;
   margin-bottom: 0.5rem;
 }
 
@@ -391,17 +418,23 @@ body {
 .confirmation-subtitle {
   text-align: center;
   color: var(--brown-light);
-  font-size: 0.9rem;
-  margin-bottom: 1.25rem;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
 }
 
 .detail-row {
   display: flex;
   justify-content: space-between;
   font-size: 0.85rem;
-  padding: 0.25rem 0;
+  padding: 0.3rem 0;
 }
 
 .detail-row span:first-child {
   color: var(--brown-light);
+}
+
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }

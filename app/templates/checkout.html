@@ -2,54 +2,51 @@
 
 {% block title %}Checkout — Cupcake Delivery{% endblock %}
 
-{% block header_left %}
-  <a class="icon-btn" href="{{ url_for('cart.ver_carrinho') }}" aria-label="Voltar">←</a>
-{% endblock %}
-{% block header_title %}Checkout{% endblock %}
-{% block header_right %}
-  <span class="spacer"></span>
-{% endblock %}
-
 {% block content %}
-  <div class="info-card">
-    <h2>🧾 Resumo do Pedido</h2>
-    <ul class="order-summary-list">
-      {% for item in items %}
-        <li>{{ item.quantidade }}x {{ item.cupcake.nome }} — R$ {{ "%.2f"|format(item.subtotal) }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-
-  <form method="post">
-    <div class="info-card">
-      <h2>📍 Endereço de Entrega</h2>
-      <label>
-        Nome
-        <input type="text" name="nome_cliente" required value="{{ request.form.get('nome_cliente', '') }}">
-      </label>
-      <label>
-        Telefone
-        <input type="text" name="telefone" required value="{{ request.form.get('telefone', '') }}">
-      </label>
-      <label>
-        Endereço completo
-        <textarea name="endereco" required rows="2">{{ request.form.get('endereco', '') }}</textarea>
-      </label>
-    </div>
+  <div class="narrow">
+    <a class="back-link" href="{{ url_for('cart.ver_carrinho') }}">← Voltar ao carrinho</a>
+    <h1>Checkout</h1>
 
     <div class="info-card">
-      <h2>💳 Forma de Pagamento</h2>
-      <div class="payment-options">
-        {% for forma in formas_pagamento %}
-          <label class="payment-option">
-            <input type="radio" name="forma_pagamento" value="{{ forma }}"
-                   {% if request.form.get('forma_pagamento') == forma %}checked{% endif %} required>
-            {{ forma|capitalize }}
-          </label>
+      <h2>🧾 Resumo do Pedido</h2>
+      <ul class="order-summary-list">
+        {% for item in items %}
+          <li>{{ item.quantidade }}x {{ item.cupcake.nome }} — R$ {{ "%.2f"|format(item.subtotal) }}</li>
         {% endfor %}
-      </div>
+      </ul>
     </div>
 
-    <button type="submit" class="btn-primary">Confirmar Pedido (R$ {{ "%.2f"|format(total) }})</button>
-  </form>
+    <form method="post">
+      <div class="info-card">
+        <h2>📍 Endereço de Entrega</h2>
+        <label>
+          Nome
+          <input type="text" name="nome_cliente" required value="{{ request.form.get('nome_cliente', '') }}">
+        </label>
+        <label>
+          Telefone
+          <input type="text" name="telefone" required value="{{ request.form.get('telefone', '') }}">
+        </label>
+        <label>
+          Endereço completo
+          <textarea name="endereco" required rows="2">{{ request.form.get('endereco', '') }}</textarea>
+        </label>
+      </div>
+
+      <div class="info-card">
+        <h2>💳 Forma de Pagamento</h2>
+        <div class="payment-options">
+          {% for forma in formas_pagamento %}
+            <label class="payment-option">
+              <input type="radio" name="forma_pagamento" value="{{ forma }}"
+                     {% if request.form.get('forma_pagamento') == forma %}checked{% endif %} required>
+              {{ forma|capitalize }}
+            </label>
+          {% endfor %}
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary">Confirmar Pedido (R$ {{ "%.2f"|format(total) }})</button>
+    </form>
+  </div>
 {% endblock %}
