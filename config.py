@@ -5,10 +5,16 @@ os.makedirs(os.path.join(BASE_DIR, "instance"), exist_ok=True)
 
 
 def _normalize_db_url(url):
+    if not url:
+        return url
     # Render (e outros provedores) ainda fornecem "postgres://", mas o
     # SQLAlchemy 2.x exige o esquema "postgresql://".
-    if url and url.startswith("postgres://"):
-        return url.replace("postgres://", "postgresql://", 1)
+    if url.startswith("postgres://"):
+        url = url.replace("postgres://", "postgresql://", 1)
+    # Sem driver explícito, o SQLAlchemy 2.1+ tenta usar "psycopg" (v3) por
+    # padrão. Forçamos "psycopg2", que é o driver instalado no requirements.txt.
+    if url.startswith("postgresql://"):
+        url = url.replace("postgresql://", "postgresql+psycopg2://", 1)
     return url
 
 
