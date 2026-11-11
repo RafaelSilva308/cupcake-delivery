@@ -2,48 +2,52 @@
 
 {% block title %}Carrinho — Cupcake Delivery{% endblock %}
 
+{% block header_left %}
+  <a class="icon-btn" href="{{ url_for('catalog.index') }}" aria-label="Voltar">←</a>
+{% endblock %}
+{% block header_title %}Meu Carrinho{% endblock %}
+{% block header_right %}
+  <span class="spacer"></span>
+{% endblock %}
+
 {% block content %}
-  <h1>Seu Carrinho</h1>
+  {% set thumb_colors = ['bg-pink', 'bg-tan', 'bg-yellow', 'bg-lavender', 'bg-mint', 'bg-blue'] %}
 
   {% if not items %}
-    <p>Seu carrinho está vazio.</p>
-    <a href="{{ url_for('catalog.index') }}">Voltar ao cardápio</a>
+    <p class="empty-state">Seu carrinho está vazio.</p>
+    <a class="btn-primary" href="{{ url_for('catalog.index') }}">Ver cardápio</a>
   {% else %}
-    <table class="cart-table">
-      <thead>
-        <tr>
-          <th>Cupcake</th>
-          <th>Preço unit.</th>
-          <th>Quantidade</th>
-          <th>Subtotal</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in items %}
-          <tr>
-            <td>{{ item.cupcake.nome }}</td>
-            <td>R$ {{ "%.2f"|format(item.cupcake.preco) }}</td>
-            <td>
-              <form action="{{ url_for('cart.atualizar', cupcake_id=item.cupcake.id) }}" method="post" class="update-quantity-form">
-                <input type="number" name="quantidade" value="{{ item.quantidade }}" min="0" max="20">
-                <button type="submit">Atualizar</button>
-              </form>
-            </td>
-            <td>R$ {{ "%.2f"|format(item.subtotal) }}</td>
-            <td>
-              <form action="{{ url_for('cart.remover', cupcake_id=item.cupcake.id) }}" method="post">
-                <button type="submit" class="btn-remove">Remover</button>
-              </form>
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <div class="cart-list">
+      {% for item in items %}
+        <div class="cart-item">
+          <div class="product-thumb {{ thumb_colors[loop.index0 % thumb_colors|length] }}">
+            <img src="{{ item.cupcake.imagem_url }}" alt="{{ item.cupcake.nome }}">
+          </div>
+          <div class="cart-item-info">
+            <div class="name">{{ item.cupcake.nome }}</div>
+            <div class="price">R$ {{ "%.2f"|format(item.cupcake.preco) }}</div>
+          </div>
+          <div class="cart-item-controls">
+            <form action="{{ url_for('cart.atualizar', cupcake_id=item.cupcake.id) }}" method="post">
+              <input type="number" name="quantidade" value="{{ item.quantidade }}" min="0" max="20"
+                     onchange="this.form.submit()">
+            </form>
+            <form action="{{ url_for('cart.remover', cupcake_id=item.cupcake.id) }}" method="post">
+              <button type="submit" class="remove-btn" aria-label="Remover {{ item.cupcake.nome }}">✕</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
 
-    <p class="cart-total">Total: R$ {{ "%.2f"|format(total) }}</p>
+    <div class="summary-box">
+      <div class="summary-row total">
+        <span>Total</span>
+        <span>R$ {{ "%.2f"|format(total) }}</span>
+      </div>
+    </div>
 
-    <a class="btn-primary" href="{{ url_for('orders.checkout') }}">Finalizar pedido</a>
-    <a href="{{ url_for('catalog.index') }}">Continuar comprando</a>
+    <a class="btn-primary" href="{{ url_for('orders.checkout') }}">Ir para Pagamento</a>
+    <a class="btn-outline" href="{{ url_for('catalog.index') }}">Continuar comprando</a>
   {% endif %}
 {% endblock %}

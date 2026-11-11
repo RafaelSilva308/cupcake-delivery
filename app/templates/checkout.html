@@ -1,45 +1,55 @@
 {% extends "base.html" %}
 
-{% block title %}Finalizar pedido — Cupcake Delivery{% endblock %}
+{% block title %}Checkout — Cupcake Delivery{% endblock %}
+
+{% block header_left %}
+  <a class="icon-btn" href="{{ url_for('cart.ver_carrinho') }}" aria-label="Voltar">←</a>
+{% endblock %}
+{% block header_title %}Checkout{% endblock %}
+{% block header_right %}
+  <span class="spacer"></span>
+{% endblock %}
 
 {% block content %}
-  <h1>Finalizar Pedido</h1>
-
-  <section class="order-summary">
-    <h2>Resumo</h2>
-    <ul>
+  <div class="info-card">
+    <h2>🧾 Resumo do Pedido</h2>
+    <ul class="order-summary-list">
       {% for item in items %}
         <li>{{ item.quantidade }}x {{ item.cupcake.nome }} — R$ {{ "%.2f"|format(item.subtotal) }}</li>
       {% endfor %}
     </ul>
-    <p class="cart-total">Total: R$ {{ "%.2f"|format(total) }}</p>
-  </section>
+  </div>
 
-  <form method="post" class="checkout-form">
-    <label>
-      Nome
-      <input type="text" name="nome_cliente" required value="{{ request.form.get('nome_cliente', '') }}">
-    </label>
-    <label>
-      Telefone
-      <input type="text" name="telefone" required value="{{ request.form.get('telefone', '') }}">
-    </label>
-    <label>
-      Endereço de entrega
-      <textarea name="endereco" required>{{ request.form.get('endereco', '') }}</textarea>
-    </label>
-    <label>
-      Forma de pagamento
-      <select name="forma_pagamento" required>
-        <option value="">Selecione</option>
+  <form method="post">
+    <div class="info-card">
+      <h2>📍 Endereço de Entrega</h2>
+      <label>
+        Nome
+        <input type="text" name="nome_cliente" required value="{{ request.form.get('nome_cliente', '') }}">
+      </label>
+      <label>
+        Telefone
+        <input type="text" name="telefone" required value="{{ request.form.get('telefone', '') }}">
+      </label>
+      <label>
+        Endereço completo
+        <textarea name="endereco" required rows="2">{{ request.form.get('endereco', '') }}</textarea>
+      </label>
+    </div>
+
+    <div class="info-card">
+      <h2>💳 Forma de Pagamento</h2>
+      <div class="payment-options">
         {% for forma in formas_pagamento %}
-          <option value="{{ forma }}" {% if request.form.get('forma_pagamento') == forma %}selected{% endif %}>
-            {{ forma }}
-          </option>
+          <label class="payment-option">
+            <input type="radio" name="forma_pagamento" value="{{ forma }}"
+                   {% if request.form.get('forma_pagamento') == forma %}checked{% endif %} required>
+            {{ forma|capitalize }}
+          </label>
         {% endfor %}
-      </select>
-    </label>
+      </div>
+    </div>
 
-    <button type="submit" class="btn-primary">Confirmar pedido</button>
+    <button type="submit" class="btn-primary">Confirmar Pedido (R$ {{ "%.2f"|format(total) }})</button>
   </form>
 {% endblock %}

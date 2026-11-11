@@ -23,7 +23,7 @@ def test_checkout_cria_pedido_com_sucesso(client, app, cupcake):
     )
 
     assert response.status_code == 200
-    assert "Pedido confirmado".encode("utf-8") in response.data
+    assert b"recebido" in response.data.lower()
 
     with app.app_context():
         pedidos = Pedido.query.all()

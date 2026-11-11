@@ -3,25 +3,26 @@
 {% block title %}Cardápio — Cupcake Delivery{% endblock %}
 
 {% block content %}
-  <h1>Nosso Cardápio</h1>
+  {% set thumb_colors = ['bg-pink', 'bg-tan', 'bg-yellow', 'bg-lavender', 'bg-mint', 'bg-blue'] %}
 
   {% if not cupcakes %}
-    <p>Nenhum cupcake disponível no momento.</p>
+    <p class="empty-state">Nenhum cupcake disponível no momento.</p>
   {% else %}
     <div class="product-grid">
       {% for cupcake in cupcakes %}
         <article class="product-card">
-          <img src="{{ cupcake.imagem_url }}" alt="{{ cupcake.nome }}" class="product-image">
+          <div class="product-thumb {{ thumb_colors[loop.index0 % thumb_colors|length] }}">
+            <img src="{{ cupcake.imagem_url }}" alt="{{ cupcake.nome }}">
+          </div>
           <h2>{{ cupcake.nome }}</h2>
           <p class="product-description">{{ cupcake.descricao }}</p>
-          <p class="product-price">R$ {{ "%.2f"|format(cupcake.preco) }}</p>
-          <form action="{{ url_for('cart.adicionar', cupcake_id=cupcake.id) }}" method="post" class="add-to-cart-form">
-            <label>
-              Qtd:
-              <input type="number" name="quantidade" value="1" min="1" max="20">
-            </label>
-            <button type="submit">Adicionar ao carrinho</button>
-          </form>
+          <div class="product-row">
+            <p class="product-price">R$ {{ "%.2f"|format(cupcake.preco) }}</p>
+            <form action="{{ url_for('cart.adicionar', cupcake_id=cupcake.id) }}" method="post" class="add-to-cart-form">
+              <input type="hidden" name="quantidade" value="1">
+              <button type="submit" class="btn-add-circle" aria-label="Adicionar {{ cupcake.nome }} ao carrinho">+</button>
+            </form>
+          </div>
         </article>
       {% endfor %}
     </div>
